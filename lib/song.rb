@@ -31,6 +31,23 @@ class Song
     end
   end
 
+  def initialize(id=nil, name, album)
+    @id = id
+    @name = name
+    @album = album
+  end
+
+  def self.create_table
+    sql =  <<-SQL
+      CREATE TABLE IF NOT EXISTS songs (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        album TEXT
+        )
+    SQL
+    DB[:conn].execute(sql)
+  end
+
   def save
     sql = "INSERT INTO #{table_name_for_insert} (#{col_names_for_insert}) VALUES (#{values_for_insert})"
     DB[:conn].execute(sql)
